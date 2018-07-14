@@ -12,19 +12,19 @@ export class WorkoutDetail extends React.Component {
     this.handleOnButtonPress = this.handleOnButtonPress.bind(this)
 
     this.state = {
-      newParticipant: ''
+      name: ''
     }
   }
 
   handleOnInputChange(input) {
-    this.setState({ newParticipant: input })
+    this.setState({ name: input })
   }
 
   handleOnButtonPress() {
     const { workoutId, addParticipant } = this.props
-    const { newParticipant } = this.state
+    const { name } = this.state
 
-    addParticipant({ workoutId, participant: newParticipant })
+    addParticipant({ workoutId, name })
   }
 
   renderItem({ item }) {
@@ -35,7 +35,6 @@ export class WorkoutDetail extends React.Component {
 
   render() {
     const { title, participants } = this.props
-    const { newParticipant } = this.state
 
     return (
       <View style={styles.container}>

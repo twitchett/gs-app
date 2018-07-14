@@ -42,10 +42,10 @@ export const reducer = (state = {}, action = {}) => {
     case CHANGE_VIEW:
       return { ...state, view: payload }
     case ADD_PARTICIPANT:
-      const { workoutId, participant } = payload
+      const { workoutId, name } = payload
       const { participants } = state.workouts[workoutId]
       // create new array, don't just append
-      const updatedParticipants = [...participants, participant]
+      const updatedParticipants = [...participants, name]
       const newState = { 
         ...state
       }
