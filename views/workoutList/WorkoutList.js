@@ -1,6 +1,8 @@
 import React from 'react'
 import { StyleSheet, FlatList, Text, View, Button } from 'react-native'
 import { connect } from 'react-redux'
+import { changeView } from '../../reducer'
+import PropTypes from 'prop-types'
 
 export class WorkoutList extends React.Component {
   constructor(props) {
@@ -9,11 +11,13 @@ export class WorkoutList extends React.Component {
   }
 
   renderItem({ item }) {
+    const { changeView } = this.props
+
     return (
       <View style={styles.item}>
         <Button
-          onPress={() => { /* TODO */ }}
-          title={item.key}
+          title={item.title}
+          onPress={() => changeView(item.key)}
         />
       </View>
     )
@@ -25,11 +29,11 @@ export class WorkoutList extends React.Component {
         <Text>Choose a workout:</Text>
         <FlatList
           data={[
-            {key: 'HIIT'},
-            {key: 'Yoga'},
-            {key: 'Badminton'},
-            {key: 'Kettlebells'},
-            {key: 'Swimming'}
+            {title: 'HIIT', key: 'hiit'},
+            {title: 'Yoga', key: 'yoga'},
+            {title: 'Badminton', key: 'badminton'},
+            {title: 'Kettlebells', key: 'kettlebells'},
+            {title: 'Swimming', key: 'swimming'}
           ]}
           renderItem={this.renderItem}
         />
@@ -52,10 +56,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => {
-  return {}
+WorkoutList.propTypes = {
+  changeView: PropTypes.func.isRequired
 }
 
-const mapDispatchToProps = {}
+const mapStateToProps = state => ({})
+const mapDispatchToProps = dispatch => ({
+  changeView: view => { dispatch(changeView(view)) }
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WorkoutList)

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 })
 
 WorkoutDetail.propTypes = {
-  workoutId: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   participants: PropTypes.arrayOf(PropTypes.string)
 }
 
@@ -74,14 +74,12 @@ WorkoutDetail.defaultProps = {
   participants: []
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { title, participants } = state.workouts[ownProps.workoutId]
+export default connect(state => {
+  console.log('detail state', state)
+  const workoutId = state.view
+  const { title, participants } = state.workouts[workoutId]
   return {
     title,
     participants
   }
-}
-
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutDetail);
+})(WorkoutDetail)

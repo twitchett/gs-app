@@ -1,4 +1,5 @@
 export const ADD_PARTICIPANT = 'gs-app/workouts/ADD_PARTICPANT'
+export const CHANGE_VIEW = 'gs-app/CHANGE_VIEW'
 
 export const initialState = {
   view: 'workoutList',
@@ -26,8 +27,16 @@ export const initialState = {
   }
 }
 
+export function changeView(view) {
+  return { type: CHANGE_VIEW, payload: view }
+}
+
 export const reducer = (state = {}, action = {}) => {
-  switch (action.type) {
+  const { type, payload } = action
+
+  switch (type) {
+    case CHANGE_VIEW:
+      return { ...state, view: payload }
     case ADD_PARTICIPANT:
       // TODO
       return state

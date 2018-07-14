@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { createStore } from 'redux'
-import { Provider, connect } from 'react-redux'
-import { reducer, initialState } from './reducer'
+import { connect } from 'react-redux'
+import { StyleSheet, View } from 'react-native'
+import PropTypes from 'prop-types'
 import WorkoutList from './views/workoutList/WorkoutList'
+import WorkoutDetail from './views/workoutDetail/WorkoutDetail'
 
-const store = createStore(reducer, initialState)
-
-export default class App extends Component {
+export class App extends Component {
   render() {
+    // you would probably use some sort of navigation library instead of this...
+    const currentView = this.props.currentView || 'workoutList' // hack
+    
     return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          <WorkoutList />
-        </View>
-      </Provider>
+      <View style={styles.container}>
+        { (currentView === 'workoutList')
+          ? <WorkoutList />
+          : <WorkoutDetail />
+        }
+      </View>
     )
   }
 }
@@ -26,3 +28,11 @@ const styles = StyleSheet.create({
     marginTop: 50
   }
 })
+
+App.propTypes = {
+  currentView: PropTypes.string.isRequired
+}
+
+export default connect(state => {
+  return { currentView: state.view }
+})(App)
