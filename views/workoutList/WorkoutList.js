@@ -1,11 +1,28 @@
-import React from 'react';
-import { StyleSheet, FlatList, Text, View } from 'react-native';
-import { connect } from 'react-redux';
+import React from 'react'
+import { StyleSheet, FlatList, Text, View, Button } from 'react-native'
+import { connect } from 'react-redux'
 
-export default class App extends React.Component {
+export class WorkoutList extends React.Component {
+  constructor(props) {
+    super(props)
+    this.renderItem = this.renderItem.bind(this)
+  }
+
+  renderItem({ item }) {
+    return (
+      <View style={styles.item}>
+        <Button
+          onPress={() => { /* TODO */ }}
+          title={item.key}
+        />
+      </View>
+    )
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        <Text>Choose a workout:</Text>
         <FlatList
           data={[
             {key: 'HIIT'},
@@ -14,7 +31,7 @@ export default class App extends React.Component {
             {key: 'Kettlebells'},
             {key: 'Swimming'}
           ]}
-          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+          renderItem={this.renderItem}
         />
       </View>
     )
@@ -31,7 +48,14 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 10,
-    fontSize: 18,
     height: 44,
   },
-});
+})
+
+const mapStateToProps = state => {
+  return {}
+}
+
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutList);
