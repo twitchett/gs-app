@@ -1,12 +1,28 @@
 export const ADD_PARTICIPANT = 'gs-app/workouts/ADD_PARTICPANT'
 
 export const initialState = {
+  view: 'workoutList',
   workouts: {
-    hiit: [],
-    swimming: [],
-    badminton: [],
-    yoga: [],
-    kettlebells: []
+    hiit: {
+      title: 'HIIT',
+      participants: [],
+    },
+    swimming: {
+      title: 'Swimming',
+      participants: ['Sarah'],
+    },
+    badminton: {
+      title: 'Badminton',
+      participants: []
+    },
+    yoga: {
+      title: 'Yoga',
+      participants: []
+    },
+    kettlebells: {
+      title: 'Kettlebells',
+      participants: []
+    }
   }
 }
 
