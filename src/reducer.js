@@ -1,4 +1,5 @@
 export const ADD_PARTICIPANT = 'gs-app/workouts/ADD_PARTICPANT'
+export const REMOVE_PARTICIPANT = 'gs-app/workouts/ADD_PARTICPANT'
 export const CHANGE_VIEW = 'gs-app/CHANGE_VIEW'
 
 export const initialState = {

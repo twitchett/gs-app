@@ -1,11 +1,16 @@
 import Expo from 'expo'
 import React, { Component } from 'react'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import { Provider } from 'react-redux'
 import { reducer, initialState } from './reducer'
+import { websocketSaga } from './sagas'
 import { App } from './App'
 
-const store = createStore(reducer, initialState)
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware))
+
+sagaMiddleware.run(websocketSaga)
 
 class AppProvider extends Component {
   render() {

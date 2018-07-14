@@ -5,14 +5,6 @@ var socketio = require('socket.io')
 var app = express()
 var socket = socketio(server)
 
-const WORKOUTS = [
-  'hiit',
-  'yoga',
-  'badminton',
-  'kettlebells',
-  'swimming'
-]
-
 const participants = [
   { name: 'Rick Sanchez', workoutId: 'swimming', checkedIn: true },
   { name: 'Karl Hyde', workoutId: 'badminton', checkedIn: true },
@@ -28,12 +20,8 @@ const participants = [
 
 server.listen(3000, () => console.log('listening on *:3000'))
 
-socket.on('connection', (socket) => {
+socket.on('connection', socket => {
   console.log('A client just joined on ', socket.id);
-})
-
-socket.on('participant_add', payload => {
-  socket.emit('participant_change')
 })
 
 let n = 0
@@ -44,4 +32,4 @@ const intervalId = setInterval(() => {
   if (n === participants.length) {
     clearInterval(intervalId)
   }
-}, 1000)
+}, 1500)
