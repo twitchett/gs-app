@@ -1,12 +1,30 @@
 import React from 'react'
-import { StyleSheet, FlatList, Text, TextInput, View, Button } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { StyleSheet, FlatList, Text, TextInput, View, Button } from 'react-native'
+import { addParticipant } from '../../reducer'
 
 export class WorkoutDetail extends React.Component {
   constructor(props) {
     super(props)
     this.renderItem = this.renderItem.bind(this)
+    this.handleOnInputChange = this.handleOnInputChange.bind(this)
+    this.handleOnButtonPress = this.handleOnButtonPress.bind(this)
+
+    this.state = {
+      newParticipant: ''
+    }
+  }
+
+  handleOnInputChange(input) {
+    this.setState({ newParticipant: input })
+  }
+
+  handleOnButtonPress() {
+    const { workoutId, addParticipant } = this.props
+    const { newParticipant } = this.state
+
+    addParticipant({ workoutId, participant: newParticipant })
   }
 
   renderItem({ item }) {
@@ -17,6 +35,7 @@ export class WorkoutDetail extends React.Component {
 
   render() {
     const { title, participants } = this.props
+    const { newParticipant } = this.state
 
     return (
       <View style={styles.container}>
@@ -25,11 +44,11 @@ export class WorkoutDetail extends React.Component {
           <TextInput
             style={styles.addInput}
             placeholder="Add participant"
-            onChangeText={text => this.setState({text})}
+            onChangeText={this.handleOnInputChange}
           />
           <Button
             title="Add"
-            onPress={() => { /* TODO */ }}
+            onPress={this.handleOnButtonPress}
           />
         </View>
         <FlatList
@@ -66,20 +85,31 @@ const styles = StyleSheet.create({
 })
 
 WorkoutDetail.propTypes = {
+  workoutId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  participants: PropTypes.arrayOf(PropTypes.string)
+  addParticipant: PropTypes.func.isRequired,
+  participants: PropTypes.arrayOf(PropTypes.string),
 }
 
 WorkoutDetail.defaultProps = {
   participants: []
 }
 
-export default connect(state => {
-  console.log('detail state', state)
+const mapStateToProps = state => {
   const workoutId = state.view
   const { title, participants } = state.workouts[workoutId]
   return {
+    workoutId,
     title,
     participants
   }
-})(WorkoutDetail)
+}
+
+const mapDispatchToProps = dispatch => ({
+  addParticipant: payload => { dispatch(addParticipant(payload)) }
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WorkoutDetail)

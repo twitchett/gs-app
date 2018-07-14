@@ -8,7 +8,8 @@ import WorkoutDetail from './views/workoutDetail/WorkoutDetail'
 export class App extends Component {
   render() {
     // you would probably use some sort of navigation library instead of this...
-    const currentView = this.props.currentView || 'workoutList' // hack
+    // const currentView = this.props.currentView
+    const currentView = 'swimming'
     
     return (
       <View style={styles.container}>
@@ -34,5 +35,5 @@ App.propTypes = {
 }
 
 export default connect(state => {
-  return { currentView: state.view }
+  currentView: state.view
 })(App)

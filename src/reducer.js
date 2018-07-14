@@ -2,7 +2,7 @@ export const ADD_PARTICIPANT = 'gs-app/workouts/ADD_PARTICPANT'
 export const CHANGE_VIEW = 'gs-app/CHANGE_VIEW'
 
 export const initialState = {
-  view: 'workoutList',
+  view: 'swimming',
   workouts: {
     hiit: {
       title: 'HIIT',
@@ -31,6 +31,10 @@ export function changeView(view) {
   return { type: CHANGE_VIEW, payload: view }
 }
 
+export function addParticipant(payload) {
+  return { type: ADD_PARTICIPANT, payload }
+}
+
 export const reducer = (state = {}, action = {}) => {
   const { type, payload } = action
 
@@ -38,8 +42,15 @@ export const reducer = (state = {}, action = {}) => {
     case CHANGE_VIEW:
       return { ...state, view: payload }
     case ADD_PARTICIPANT:
-      // TODO
-      return state
+      const { workoutId, participant } = payload
+      const { participants } = state.workouts[workoutId]
+      // create new array, don't just append
+      const updatedParticipants = [...participants, participant]
+      const newState = { 
+        ...state
+      }
+      newState.workouts[workoutId].participants = updatedParticipants
+      return newState
     default:
       return state
   }
