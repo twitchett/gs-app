@@ -3,7 +3,7 @@ export const REMOVE_PARTICIPANT = 'gs-app/workouts/ADD_PARTICPANT'
 export const CHANGE_VIEW = 'gs-app/CHANGE_VIEW'
 
 export const initialState = {
-  view: 'swimming',
+  view: 'workoutList',
   workouts: {
     hiit: {
       title: 'HIIT',
@@ -11,7 +11,7 @@ export const initialState = {
     },
     swimming: {
       title: 'Swimming',
-      participants: ['Sarah'],
+      participants: [],
     },
     badminton: {
       title: 'Badminton',
