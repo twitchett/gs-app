@@ -8,6 +8,7 @@ var socket = socketio(server)
 const participants = [
   { name: 'Rick Sanchez', workoutId: 'swimming', checkedIn: true },
   { name: 'Karl Hyde', workoutId: 'badminton', checkedIn: true },
+  { name: 'Bugs Bunny', workoutId: 'yoga', checkedIn: true },
   { name: 'Peter Rabbit', workoutId: 'yoga', checkedIn: true },
   { name: 'Boris Johnson', workoutId: 'swimming', checkedIn: true },
   { name: 'Jeff Mills', workoutId: 'hiit', checkedIn: true },
@@ -21,8 +22,8 @@ const participants = [
 const triggerEvents = () => {
   let n = 0
   const intervalId = setInterval(() => {
-    console.log('emitting participant_change', participants[n])
-    socket.emit('participant_change', participants[n])
+    console.log('emitting PARTICIPANT_CHANGE', participants[n])
+    socket.emit('PARTICIPANT_CHANGE', participants[n])
     n += 1
     if (n === participants.length) {
       clearInterval(intervalId)

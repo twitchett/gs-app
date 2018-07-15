@@ -1,42 +1,34 @@
-export const ADD_PARTICIPANT = 'gs-app/workouts/ADD_PARTICPANT'
-export const REMOVE_PARTICIPANT = 'gs-app/workouts/ADD_PARTICPANT'
-export const CHANGE_VIEW = 'gs-app/CHANGE_VIEW'
+import { ADD_PARTICIPANT, CHANGE_VIEW } from './actions'
 
+// Initial State
 export const initialState = {
   view: 'workoutList',
   workouts: {
     hiit: {
       title: 'HIIT',
-      participants: [],
+      participants: ['Dave'],
     },
     swimming: {
       title: 'Swimming',
-      participants: [],
+      participants: ['Mark'],
     },
     badminton: {
       title: 'Badminton',
-      participants: []
+      participants: ['Tim']
     },
     yoga: {
       title: 'Yoga',
-      participants: []
+      participants: ['Sarah', 'Fred']
     },
     kettlebells: {
       title: 'Kettlebells',
-      participants: []
+      participants: ['Shannon']
     }
   }
 }
 
-export function changeView(view) {
-  return { type: CHANGE_VIEW, payload: view }
-}
-
-export function addParticipant(payload) {
-  return { type: ADD_PARTICIPANT, payload }
-}
-
-export const reducer = (state = {}, action = {}) => {
+// Reducer
+export default (state = {}, action = {}) => {
   const { type, payload } = action
 
   switch (type) {

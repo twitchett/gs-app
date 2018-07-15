@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, FlatList, Text, View, Button } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { changeView } from '../../reducer'
+import { changeView } from '../../redux/actions'
 
 export class WorkoutList extends React.Component {
   constructor(props) {

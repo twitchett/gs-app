@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { Provider } from 'react-redux'
-import { reducer, initialState } from './reducer'
-import { websocketSaga } from './sagas'
-import App from './App'
+import reducer, { initialState } from './redux/reducer'
+import { websocketSaga } from './redux/sagas'
+import App from './components/app/App'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(

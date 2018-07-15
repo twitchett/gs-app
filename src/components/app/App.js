@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
-import WorkoutList from './views/workoutList/WorkoutList'
-import WorkoutDetail from './views/workoutDetail/WorkoutDetail'
+import WorkoutList from '../workoutList/WorkoutList'
+import WorkoutDetail from '../workoutDetail/WorkoutDetail'
 
 export class App extends Component {
   render() {
