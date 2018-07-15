@@ -7,7 +7,8 @@ describe('WorkoutDetail', () => {
   const defaultProps = {
     workoutId: 'running',
     title: 'Running',
-    addParticipant: () => {}
+    addParticipant: () => {},
+    changeViewToList: () => {},
   }
 
   it('renders the component', () => {
@@ -38,10 +39,9 @@ describe('WorkoutDetail', () => {
   })
 
   it('calls addParticipant when the Add button is pressed', () => {
-    const addParticipantMock = jest.fn()
     const props = {
       ...defaultProps,
-      addParticipant: addParticipantMock
+      addParticipant: jest.fn()
     }
     const wrapper = mount(<WorkoutDetail {...props} />)
     const textInput = wrapper.find('TextInput').first()
@@ -52,10 +52,26 @@ describe('WorkoutDetail', () => {
 
     const button = wrapper.find('Button').first().props().onPress()
 
-    expect(addParticipantMock).toHaveBeenCalledTimes(1)
-    expect(addParticipantMock).toHaveBeenCalledWith({
+    expect(props.addParticipant).toHaveBeenCalledTimes(1)
+    expect(props.addParticipant).toHaveBeenCalledWith({
       name: '',
       workoutId: 'running'
     })
+  })
+
+  it('calls changeView when the Back button is pressed', () => {
+    const props = {
+      ...defaultProps,
+      changeViewToList: jest.fn()
+    }
+    const wrapper = mount(<WorkoutDetail {...props} />)
+    const button = wrapper.find('Button')
+      .last()  // not good!
+      .props()
+      .onPress()
+
+    wrapper.update()
+
+    expect(props.changeViewToList).toHaveBeenCalledTimes(1)
   })
 })

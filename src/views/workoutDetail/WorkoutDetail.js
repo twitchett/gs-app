@@ -2,29 +2,36 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { StyleSheet, FlatList, Text, TextInput, View, Button } from 'react-native'
-import { addParticipant } from '../../reducer'
+import { addParticipant, changeView } from '../../reducer'
 
 export class WorkoutDetail extends React.Component {
   constructor(props) {
     super(props)
     this.renderItem = this.renderItem.bind(this)
-    this.handleOnInputChange = this.handleOnInputChange.bind(this)
-    this.handleOnButtonPress = this.handleOnButtonPress.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleAddButtonPress = this.handleAddButtonPress.bind(this)
+    this.handleBackButtonPress = this.handleBackButtonPress.bind(this)
 
     this.state = {
       name: ''
     }
   }
 
-  handleOnInputChange(input) {
+  handleInputChange(input) {
     this.setState({ name: input })
   }
 
-  handleOnButtonPress() {
+  handleAddButtonPress() {
     const { workoutId, addParticipant } = this.props
     const { name } = this.state
 
     addParticipant({ workoutId, name })
+  }
+
+  handleBackButtonPress() {
+    const { changeViewToList } = this.props
+
+    changeViewToList()
   }
 
   renderItem({ item }) {
@@ -43,17 +50,21 @@ export class WorkoutDetail extends React.Component {
           <TextInput
             style={styles.addInput}
             placeholder="Add participant"
-            onChangeText={this.handleOnInputChange}
+            onChangeText={this.handleInputChange}
           />
           <Button
             title="Add"
-            onPress={this.handleOnButtonPress}
+            onPress={this.handleAddButtonPress}
           />
         </View>
         <FlatList
           data={participants}
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderItem}
+        />
+        <Button
+          title="Back"
+          onPress={this.handleBackButtonPress}
         />
       </View>
     )
@@ -87,6 +98,7 @@ WorkoutDetail.propTypes = {
   workoutId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   addParticipant: PropTypes.func.isRequired,
+  changeViewToList: PropTypes.func.isRequired,
   participants: PropTypes.arrayOf(PropTypes.string),
 }
 
@@ -105,7 +117,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addParticipant: payload => { dispatch(addParticipant(payload)) }
+  addParticipant: payload => { dispatch(addParticipant(payload)) },
+  changeViewToList: () => { dispatch(changeView('workoutList')) }
 })
 
 export default connect(
