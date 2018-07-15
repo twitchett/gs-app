@@ -18,18 +18,22 @@ const participants = [
   { name: 'Peter Rabbit', workoutId: 'yoga', checkedIn: false }
 ]
 
+const triggerEvents = () => {
+  let n = 0
+  const intervalId = setInterval(() => {
+    console.log('emitting participant_change', participants[n])
+    socket.emit('participant_change', participants[n])
+    n += 1
+    if (n === participants.length) {
+      clearInterval(intervalId)
+    }
+  }, 2000)
+}
+
 server.listen(3000, () => console.log('listening on *:3000'))
 
 socket.on('connection', socket => {
-  console.log('A client just joined on ', socket.id);
+  console.log('A client just joined on ', socket.id)
+  triggerEvents()
 })
 
-let n = 0
-const intervalId = setInterval(() => {
-  console.log('emitting participant_change', participants[n])
-  socket.emit('participant_change', participants[n])
-  n += 1
-  if (n === participants.length) {
-    clearInterval(intervalId)
-  }
-}, 1500)
