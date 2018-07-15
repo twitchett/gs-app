@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, FlatList, Text, View, Button } from 'react-native'
 import { connect } from 'react-redux'
-import { changeView } from '../../reducer'
 import PropTypes from 'prop-types'
+import { changeView } from '../../reducer'
 
 export class WorkoutList extends React.Component {
   constructor(props) {
@@ -24,17 +24,20 @@ export class WorkoutList extends React.Component {
   }
 
   render() {
+    // TODO: get this from store
+    const workouts = [
+      {title: 'HIIT', key: 'hiit'},
+      {title: 'Yoga', key: 'yoga'},
+      {title: 'Badminton', key: 'badminton'},
+      {title: 'Kettlebells', key: 'kettlebells'},
+      {title: 'Swimming', key: 'swimming'}
+    ]
+
     return (
       <View style={styles.container}>
         <Text>Choose a workout:</Text>
         <FlatList
-          data={[
-            {title: 'HIIT', key: 'hiit'},
-            {title: 'Yoga', key: 'yoga'},
-            {title: 'Badminton', key: 'badminton'},
-            {title: 'Kettlebells', key: 'kettlebells'},
-            {title: 'Swimming', key: 'swimming'}
-          ]}
+          data={workouts}
           renderItem={this.renderItem}
         />
       </View>
