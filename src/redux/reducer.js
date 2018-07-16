@@ -34,9 +34,14 @@ export default (state = {}, action = {}) => {
   switch (type) {
     case CHANGE_VIEW:
       return { ...state, view: payload }
+
     case ADD_PARTICIPANT:
       const { workoutId, name } = payload
       const { participants } = state.workouts[workoutId]
+      // don't add the participant if they already exist
+      if (participants.includes(name)) {
+        return state
+      }
       // create new array, don't just append
       const updatedParticipants = [...participants, name]
       const newState = { 
@@ -44,6 +49,7 @@ export default (state = {}, action = {}) => {
       }
       newState.workouts[workoutId].participants = updatedParticipants
       return newState
+
     default:
       return state
   }

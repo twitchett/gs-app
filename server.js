@@ -1,11 +1,7 @@
-var express = require('express')
-var server = require('http').Server(app)
-var socketio = require('socket.io')
+const server = require('http').createServer()
+const socket = require('socket.io')(server)
 
-var app = express()
-var socket = socketio(server)
-
-const participants = [
+const events = [
   { name: 'Rick Sanchez', workoutId: 'swimming', checkedIn: true },
   { name: 'Karl Hyde', workoutId: 'badminton', checkedIn: true },
   { name: 'Bugs Bunny', workoutId: 'yoga', checkedIn: true },
@@ -14,18 +10,18 @@ const participants = [
   { name: 'Jeff Mills', workoutId: 'hiit', checkedIn: true },
   { name: 'Gandalf the Grey', workoutId: 'swimming', checkedIn: true },
   { name: 'Princess Peach', workoutId: 'kettlebells', checkedIn: true },
-  { name: 'Rick Sanchez', workoutId: 'swimming', checkedIn: false },
-  { name: 'Karl Hyde', workoutId: 'badminton', checkedIn: false },
-  { name: 'Peter Rabbit', workoutId: 'yoga', checkedIn: false }
+  { name: 'Harry Kane', workoutId: 'hiit', checkedIn: true },
+  { name: 'Harry Potter', workoutId: 'badminton', checkedIn: true },
+  { name: 'Marge Simpson', workoutId: 'yoga', checkedIn: true }
 ]
 
 const triggerEvents = () => {
   let n = 0
   const intervalId = setInterval(() => {
-    console.log('emitting PARTICIPANT_CHANGE', participants[n])
-    socket.emit('PARTICIPANT_CHANGE', participants[n])
+    console.log('emitting PARTICIPANT_CHANGE', events[n])
+    socket.emit('PARTICIPANT_CHANGE', events[n])
     n += 1
-    if (n === participants.length) {
+    if (n === events.length) {
       clearInterval(intervalId)
     }
   }, 2000)

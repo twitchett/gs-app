@@ -117,8 +117,12 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addParticipant: payload => { dispatch(addParticipant(payload)) },
-  changeViewToList: () => { dispatch(changeView('workoutList')) }
+  addParticipant: payload => {
+    dispatch(addParticipant(payload))
+  },
+  changeViewToList: () => {
+    dispatch(changeView('workoutList'))
+  }
 })
 
 export default connect(

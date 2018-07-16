@@ -65,7 +65,9 @@ WorkoutList.propTypes = {
 
 const mapStateToProps = state => ({})
 const mapDispatchToProps = dispatch => ({
-  changeView: view => { dispatch(changeView(view)) }
+  changeView: view => {
+    dispatch(changeView(view))
+  }
 })
 
 export default connect(
