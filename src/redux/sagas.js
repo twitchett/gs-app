@@ -1,17 +1,16 @@
 import io from 'socket.io-client'
 import { eventChannel } from 'redux-saga'
 import { call, put, take } from 'redux-saga/effects'
-import { ADD_PARTICIPANT, REMOVE_PARTICIPANT } from './actions'
+import { ADD_PARTICIPANT } from './actions'
 
-const WEBSOCKET_URL = `${process.env.WEBSOCKET_URL}:3000` || 'http://10.230.4.24:3000'
+const WEBSOCKET_URL = `http://${process.env.REACT_NATIVE_HOST_IP}:3000`
 const PARTICIPANT_CHANGE_EVENT = 'PARTICIPANT_CHANGE'
 
 const createSocketConnection = () => {
+  console.log('trying to connect on ', WEBSOCKET_URL)
   const socket = io(WEBSOCKET_URL)
   return new Promise(resolve => {
-    socket.on('connect', () => {
-      return resolve(socket)
-    })
+    socket.on('connect', () => resolve(socket))
   })
 }
 
