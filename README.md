@@ -1,30 +1,34 @@
-# Workout App
+# Real-Time Workout App
 
-A simple app for viewing/adding participants to a list of workouts. Created with `create-react-native-app`.
+An app to monitor and manage workout participants in real-time.
 
-The app consists of a node server (`server.js`) and a react-native app (under `/src`).
+## About
 
-It was developed under 
+The project consists of a node server (`server.js`) and a React Native app (under `/src`). The app maintains a list of participants for each workout. By going into each workout, the user can see the current participants and add new ones.
+
+The server sends events to the native app over a socket.io connection, to update the lists of participants.
+
+It was developed under Node v8.9.4 and npm 5.6.0 with `create-react-native-app`.
 
 ## Setup
 
-Just `git clone` and `npm install`.
+Just `git clone` the repo and `npm install` the dependencies.
 
 ## Running the app
 
-The app can be tested using an Expo client. Disclaimer: it has only been be tested with the Expo app on an Android phone. It should work on iOS, but I haven't verified.
+The app can be tested using an Expo client. Disclaimer: it has only been be tested with the Expo app on an Android phone. Hopefully it won't have any problems on iOS, but I haven't verified.
 
-The node server opens a socket.io connection on port `3000`. For the client to be able to connect, you need to set the `WEBSOCKET_URL` environment variable to point to your machine's IP address (no need to include the port.
+The node server listens on port `3000`. For the client to be able to connect, you need to set the `REACT_NATIVE_HOST_IP` environment variable to point to your machine's IP address (no need to include the port or protocol).
 
 To start the node server and run the app:
 
 ```
-WEBSOCKET_URL=XXX.XXX.XXX.XXX npm start
+REACT_NATIVE_HOST_IP=XX.XX.XX.XX npm start
 ```
 
 You can then connect by scanning the QR code on the Expo app.
 
-Once connected, the server will emit a series of `PARTICIPANT_CHANGE` events. You can check the logs in the terminal and verify the participants in the app itself. (Note: see Unfinished Business)
+Once the app is connected, the server will emit a series of `PARTICIPANT_CHANGE` events. You can check the logs in the terminal and verify the participants in the app itself. (Note: see Unfinished Business)
 
 
 ## Tests
@@ -38,10 +42,11 @@ npm test
 ## Troubleshooting
 
 * If the Expo app won't connect check your network adapters: if you have a docker bridge or virtualbox interface on the host machine, you may need to remove it.
+* If the server won't start, check you don't have something running on port 3000 (note: it needs to be manually killed)
 
 ## Unfinished Business
 
 Due to time constraints, the following has not been implemented:
 
 * The `checkedIn` state/action/button for each participant.
-* The client doesn't send an event to the server when a participiant is manually added, so other app instances won't be updated
+* An event from the client to the server when a participiant is manually added, so other app instances can be updated.
